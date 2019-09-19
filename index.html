@@ -11,4 +11,12 @@
     <a href="read">read</a> <br/>
     <a href="qr">QR</a> <br/>
   </body>
+  <script type="text/javascript">
+    window.onload = () => {
+      let hash = window.location.hash;
+      if (hash) {
+        window.location = "https://malatalo.github.io/qr"+hash;
+      }
+    };
+  </script>
 </html>
