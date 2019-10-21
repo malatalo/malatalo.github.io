@@ -1,22 +1,89 @@
 <html>
   <head>
     <title>:)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Coming+Soon&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/css?family=Schoolbell&display=swap" rel="stylesheet" />
+    <style>
+      html {
+        font-family: "Coming Soon", cursive;
+        font-size: 20px;
+        color: white;
+        background-image: url("bg.jpg");
+        cursor: none !important;
+      }
+      center {
+        margin: auto;
+        width: 80%;
+        border: 20px ridge #cdcdcd;
+      }
+      #marquee {
+        width: 100%;
+        height: 160px;
+        border-bottom: 20px ridge #cdcdcd;
+        font-size: 40px;
+      }
+      #cursor {
+        position: absolute;
+        z-index: 10000;
+        width: 200px;
+        height: 200px;
+        background: transparent url("cursor.gif") 0 0 no-repeat;
+        pointer-events: none;
+      }
+      a{
+        cursor: none;
+      }
+      .tg{
+        height: 50px;
+      }
+    </style>
   </head>
   <body>
-    <a href="mysterium-companion">Mysterium companion</a> <br/>
-    <a href="hp-tracker">hp-tracker</a> <br/>
-    <a href="Betrayal-stats">betrayal stats</a> <br/>
-    <a href="P5jsDoodles">P5.js doodles</a> <br/>
-    <a href="ai-flappy">ai-flappy</a> <br/>
-    <a href="read">read</a> <br/>
-    <a href="qr">QR</a> <br/>
+    <div id="cursor"></div>
+    <div align="center" style="font-size: 50%;">Welcome to...</div>
+    <center>
+      <marquee id="marquee" direction="down" behavior="alternate">
+        <marquee behavior="alternate" direction="right">
+          <img class="tg" src="floss.gif"/>
+          <span>Alata.lol</span>
+          <img class="tg" src="dab.gif"/>
+        </marquee>
+      </marquee>
+      <a href="mysterium-companion">Mysterium companion</a> <br />
+      <a href="hp-tracker">hp-tracker</a> <br />
+      <a href="Betrayal-stats">betrayal stats</a> <br />
+      <a href="P5jsDoodles">P5.js doodles</a> <br />
+      <a href="ai-flappy">ai-flappy</a> <br />
+      <a href="read">read</a> <br />
+      <a href="qr">QR</a> <br />
+    </center>
   </body>
   <script type="text/javascript">
     window.onload = () => {
       let hash = window.location.hash;
       if (hash) {
-        window.location = "https://malatalo.github.io/qr"+hash;
+        window.location = "https://malatalo.github.io/qr" + hash;
       }
     };
+
+    var cursorOffset = {
+      left: 65,
+      top: 65
+    };
+
+    document.getElementsByTagName("HTML")[0].addEventListener(
+      "mousemove",
+      function(e) {
+        var $cursor = document.getElementById("cursor");
+
+        $cursor.style.left = e.pageX - cursorOffset.left + "px";
+        $cursor.style.top = e.pageY - cursorOffset.top + "px";
+      },
+      false
+    );
   </script>
 </html>
