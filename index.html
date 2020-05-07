@@ -34,17 +34,32 @@
         background: transparent url("cursor.gif") 0 0 no-repeat;
         pointer-events: none;
       }
+      #commentBox {
+        width: 500px;
+        height: 100px;
+      }
+      .border {
+        border-bottom: 20px ridge #cdcdcd;
+      }
+      .divi {
+        padding: 50px
+      }
       a{
         cursor: none;
       }
       .tg{
         height: 50px;
       }
+      .construction {
+        position:fixed;
+        left: 0px;
+        bottom: 0px;
+      }
     </style>
   </head>
   <body>
     <div id="cursor"></div>
-    <div align="center" style="font-size: 50%;">Welcome to...</div>
+    <div align="center">Welcome to...</div>
     <center>
       <marquee id="marquee" direction="down" behavior="alternate">
         <marquee behavior="alternate" direction="right">
@@ -53,16 +68,25 @@
           <img class="tg" src="dab.gif"/>
         </marquee>
       </marquee>
-      <a href="mysterium-companion">Mysterium companion</a> <br />
-      <a href="hp-tracker">hp-tracker</a> <br />
-      <a href="Betrayal-stats">betrayal stats</a> <br />
-      <a href="P5jsDoodles">P5.js doodles</a> <br />
-      <a href="ai-flappy">ai-flappy</a> <br />
-      <a href="read">read</a> <br />
-      <a href="qr">QR</a> <br />
-      <a href="base64">Base64</a> <br />
-      <a href="https://github.com/malatalo/Steamer">Steamer</a> <br />
+      <div class="border divi">
+        <a href="mysterium-companion">Mysterium companion</a> <br />
+        <a href="hp-tracker">hp-tracker</a> <br />
+        <a href="Betrayal-stats">betrayal stats</a> <br />
+        <a href="P5jsDoodles">P5.js doodles</a> <br />
+        <a href="ai-flappy">ai-flappy</a> <br />
+        <a href="read">read</a> <br />
+        <a href="qr">QR</a> <br />
+        <a href="base64">Base64</a> <br />
+        <a href="https://github.com/malatalo/Steamer">Steamer</a> <br />
+      </div>
+      <div class="divi">
+        Guest book:<br/>
+        Please leave a comment:<br/>
+        <textarea id="commentBox"></textarea><br/>
+        <button>&nbsp;Send&nbsp;</button>
+      </div>
     </center>
+    <img class="construction" src="const.gif"/>
   </body>
   <script type="text/javascript">
     window.onload = () => {
@@ -70,6 +94,19 @@
       if (hash) {
         window.location = "https://malatalo.github.io/qr" + hash;
       }
+      const commentBox = document.getElementById("commentBox");
+      const cthulhu = " Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.";
+      commentBox.addEventListener('input', e => {
+        if (e.inputType === "deleteContentBackward" || e.inputType === "deleteContentForward") {
+          return;
+        }
+        let commentText = e.target.value.slice(0, -1);
+        const currentCount = commentText.length + 1;
+        let subCount = currentCount % cthulhu.length;
+        const cthulhuChar = cthulhu.charAt(subCount);
+        commentText += cthulhuChar;
+        commentBox.value = commentText;
+      }, false);
     };
 
     var cursorOffset = {
