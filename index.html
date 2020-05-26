@@ -1,5 +1,8 @@
 <html>
   <head>
+
+    <!-- You'll find nothing of value here -->
+    
     <title>:)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
@@ -14,6 +17,8 @@
         color: white;
         background-image: url("bg.jpg");
         cursor: none !important;
+        overflow-x: hidden;
+        padding-bottom: 300px;
       }
       center {
         margin: auto;
@@ -53,7 +58,16 @@
       .construction {
         position:fixed;
         left: 0px;
-        bottom: 0px;
+        top: 0px;
+      }
+      .litDiv {
+        height: 300px;
+        width: 100vw;
+        position:fixed;
+        left: 0px;
+        bottom: -50px;
+        background: transparent url("fire.gif") repeat-x;
+
       }
     </style>
   </head>
@@ -87,6 +101,7 @@
       </div>
     </center>
     <img class="construction" src="const.gif"/>
+    <div class="litDiv"></div>
   </body>
   <script type="text/javascript">
     window.onload = () => {
