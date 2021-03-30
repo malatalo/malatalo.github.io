@@ -1,29 +1,38 @@
 <html>
   <head>
-
     <!-- You'll find nothing of value here -->
-    
+
     <title>:)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       href="https://fonts.googleapis.com/css?family=Coming+Soon&display=swap"
       rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/css?family=Schoolbell&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Schoolbell&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- https://davidshimjs.github.io/qrcodejs/ -->
+    <script src="qrcode.min.js"></script>
+
     <style>
       html {
         font-family: "Coming Soon", cursive;
         font-size: 20px;
         color: white;
-        background-image: url("bg.jpg");
-        cursor: none !important;
+        background-color: black;
         overflow-x: hidden;
         padding-bottom: 300px;
+        text-align: center;
+        /*cursor: url(png.png), auto !important;*/
+
+        /*https://www.gradientmagic.com/collection/texture/gradient/1591055117547*/
+        /* prettier-ignore */
+        background-image: repeating-linear-gradient(80deg, hsl(55,0%,7%) 0px, hsl(55,0%,7%) 10px,transparent 10px, transparent 12px),repeating-linear-gradient(228deg, hsl(55,0%,7%) 0px, hsl(55,0%,7%) 10px,transparent 10px, transparent 12px),repeating-linear-gradient(127deg, hsl(55,0%,7%) 0px, hsl(55,0%,7%) 10px,transparent 10px, transparent 12px),linear-gradient(90deg, rgb(136, 136, 136),rgb(92, 92, 92));
       }
-      center {
-        margin: auto;
-        width: 80%;
-        border: 20px ridge #cdcdcd;
+      body > * {
+        min-height: 100vh;
       }
       #marquee {
         width: 100%;
@@ -31,113 +40,121 @@
         border-bottom: 20px ridge #cdcdcd;
         font-size: 40px;
       }
-      #cursor {
-        position: absolute;
-        z-index: 10000;
-        width: 200px;
-        height: 200px;
-        background: transparent url("cursor.gif") 0 0 no-repeat;
-        pointer-events: none;
-      }
       #commentBox {
         width: 500px;
         height: 100px;
       }
-      .border {
+      .links {
         border-bottom: 20px ridge #cdcdcd;
+        display: flex;
+        flex-direction: column;
       }
       .divi {
-        padding: 50px
+        padding: 50px;
       }
-      a{
-        cursor: none;
+      #qr_container {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(circle at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 60%);
       }
-      .tg{
-        height: 50px;
+      .container {
+        margin: auto;
+        width: 80%;
+        border: 20px ridge #cdcdcd;
       }
-      .construction {
-        position:fixed;
-        left: 0px;
-        top: 0px;
+      #qrcode {
+        height: 256px;
+        width: 256px;
+        background-color: white;
+        padding: 20px;
       }
-      .litDiv {
-        height: 300px;
-        width: 100vw;
-        position:fixed;
-        left: 0px;
-        bottom: -50px;
-        background: transparent url("fire.gif") repeat-x;
-
+      a, h1 {
+          color: rgb(0,255,0)
       }
     </style>
   </head>
   <body>
-    <div id="cursor"></div>
-    <div align="center">Welcome to...</div>
-    <center>
-      <marquee id="marquee" direction="down" behavior="alternate">
-        <marquee behavior="alternate" direction="right">
-          <img class="tg" src="floss.gif"/>
-          <span>malatalo.com</span>
-          <img class="tg" src="dab.gif"/>
+    <div id="qr_container"><div id="qrcode"></div></div>
+    <div>
+      <h6>Welcome to...</h6>
+      <div class="container">
+        <marquee id="marquee" direction="down" behavior="alternate">
+          <marquee behavior="alternate" direction="right">
+            <h1>malatalo.com</h1>
+          </marquee>
         </marquee>
-      </marquee>
-      <div class="border divi">
-        <a href="mysterium-companion">Mysterium companion</a> <br />
-        <a href="hp-tracker">hp-tracker</a> <br />
-        <a href="Betrayal-stats">betrayal stats</a> <br />
-        <a href="P5jsDoodles">P5.js doodles</a> <br />
-        <a href="ai-flappy">ai-flappy</a> <br />
-        <a href="read">read</a> <br />
-        <a href="qr">QR</a> <br />
-        <a href="base64">Base64</a> <br />
-        <a href="https://github.com/malatalo/Steamer">Steamer</a> <br />
+        <div class="links divi">
+          <a href="mysterium-companion">Mysterium companion</a>
+          <a href="hp-tracker">hp-tracker</a>
+          <a href="Betrayal-stats">betrayal stats</a>
+          <a href="P5jsDoodles">P5.js doodles</a>
+          <a href="ai-flappy">ai-flappy</a>
+          <a href="read">read</a>
+          <a href="qr">QR</a>
+          <a href="base64">Base64</a>
+          <a href="https://github.com/malatalo/Steamer">Steamer</a>
+        </div>
+        <div class="divi">
+          Guest book:<br />
+          Please leave a comment:<br />
+          <textarea id="commentBox"></textarea><br />
+          <button>&nbsp;Send&nbsp;</button>
+        </div>
       </div>
-      <div class="divi">
-        Guest book:<br/>
-        Please leave a comment:<br/>
-        <textarea id="commentBox"></textarea><br/>
-        <button>&nbsp;Send&nbsp;</button>
-      </div>
-    </center>
-    <img class="construction" src="const.gif"/>
-    <div class="litDiv"></div>
+    </div>
   </body>
   <script type="text/javascript">
-    window.onload = () => {
-      let hash = window.location.hash;
-      if (hash) {
-        window.location = "https://malatalo.github.io/qr" + hash;
+    const generateQr = (qrText) => {
+      let qrcode = document.getElementById("qrcode");
+      while (qrcode.firstChild) {
+        qrcode.removeChild(qrcode.firstChild);
       }
+      const txtInput = qrText;
+      new QRCode("qrcode", {
+        text: txtInput,
+        width: 256,
+        height: 256,
+        colorDark: "#000",
+        colorLight: "rgba(0,0,0,0)",
+        correctLevel: QRCode.CorrectLevel.L,
+      });
+    };
+
+    const handleHash = () => {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        document.getElementById("qr_container").style.display = "flex";
+        generateQr(hash);
+      } else {
+        document.getElementById("qr_container").style.display = "none";
+      }
+    };
+
+    window.onload = () => {
+      handleHash();
+      window.onhashchange = handleHash;
+
       const commentBox = document.getElementById("commentBox");
       const cthulhu = " Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.";
-      commentBox.addEventListener('input', e => {
-        if (e.inputType === "deleteContentBackward" || e.inputType === "deleteContentForward") {
-          return;
-        }
-        let commentText = e.target.value.slice(0, -1);
-        const currentCount = commentText.length + 1;
-        let subCount = currentCount % cthulhu.length;
-        const cthulhuChar = cthulhu.charAt(subCount);
-        commentText += cthulhuChar;
-        commentBox.value = commentText;
-      }, false);
+      commentBox.addEventListener(
+        "input",
+        (e) => {
+          if (
+            e.inputType === "deleteContentBackward" ||
+            e.inputType === "deleteContentForward"
+          ) {
+            return;
+          }
+          let commentText = e.target.value.slice(0, -1);
+          const currentCount = commentText.length + 1;
+          let subCount = currentCount % cthulhu.length;
+          const cthulhuChar = cthulhu.charAt(subCount);
+          commentText += cthulhuChar;
+          commentBox.value = commentText;
+        },
+        false
+      );
     };
-
-    var cursorOffset = {
-      left: 65,
-      top: 65
-    };
-
-    document.getElementsByTagName("HTML")[0].addEventListener(
-      "mousemove",
-      function(e) {
-        var $cursor = document.getElementById("cursor");
-
-        $cursor.style.left = e.pageX - cursorOffset.left + "px";
-        $cursor.style.top = e.pageY - cursorOffset.top + "px";
-      },
-      false
-    );
   </script>
 </html>
