@@ -25,14 +25,16 @@
         overflow-x: hidden;
         padding-bottom: 300px;
         text-align: center;
-        /*cursor: url(png.png), auto !important;*/
-
-        /*https://www.gradientmagic.com/collection/texture/gradient/1591055117547*/
-        /* prettier-ignore */
-        background-image: repeating-linear-gradient(80deg, hsl(55,0%,7%) 0px, hsl(55,0%,7%) 10px,transparent 10px, transparent 12px),repeating-linear-gradient(228deg, hsl(55,0%,7%) 0px, hsl(55,0%,7%) 10px,transparent 10px, transparent 12px),repeating-linear-gradient(127deg, hsl(55,0%,7%) 0px, hsl(55,0%,7%) 10px,transparent 10px, transparent 12px),linear-gradient(90deg, rgb(136, 136, 136),rgb(92, 92, 92));
+        cursor: url(pixel_pizza.png), auto;
+        background-image: url(pixel_space.png);
       }
       body > * {
         min-height: 100vh;
+      }
+      a,
+      h1 {
+        cursor: url(pixel_pizza.png), auto;
+        color: rgb(0, 255, 0);
       }
       #marquee {
         width: 100%;
@@ -56,7 +58,11 @@
         display: none;
         align-items: center;
         justify-content: center;
-        background: radial-gradient(circle at center, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 60%);
+        background: radial-gradient(
+          circle at center,
+          rgba(0, 0, 0, 1) 40%,
+          rgba(0, 0, 0, 0) 60%
+        );
       }
       .container {
         margin: auto;
@@ -68,9 +74,6 @@
         width: 256px;
         background-color: white;
         padding: 20px;
-      }
-      a, h1 {
-          color: rgb(0,255,0)
       }
     </style>
   </head>
