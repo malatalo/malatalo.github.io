@@ -1,8 +1,8 @@
 <html>
   <head>
-    <!-- You'll find nothing of value here -->
+    <!-- Pls hire me as a designer -->
 
-    <title>:)</title>
+    <title>malatalo.com</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
       href="https://fonts.googleapis.com/css?family=Coming+Soon&display=swap"
@@ -14,7 +14,10 @@
     />
 
     <!-- https://davidshimjs.github.io/qrcodejs/ -->
-    <script src="qrcode.min.js"></script>
+    <script src="lib/qrcode.min.js"></script>
+
+    <!-- edited from https://github.com/tholman/cursor-effects -->
+    <script src="lib/ghostCursor.js"></script>
 
     <style>
       html {
@@ -25,15 +28,16 @@
         overflow-x: hidden;
         padding-bottom: 300px;
         text-align: center;
-        cursor: url(pixel_pizza.png), auto;
-        background-image: url(pixel_space.png);
+        background-image: url(img/pixel_space.png);
       }
       body > * {
         min-height: 100vh;
       }
+      * {
+        cursor: url(img/pixel_pizza.png), auto;
+      }
       a,
       h1 {
-        cursor: url(pixel_pizza.png), auto;
         color: rgb(0, 255, 0);
       }
       #marquee {
@@ -108,6 +112,8 @@
     </div>
   </body>
   <script type="text/javascript">
+    new ghostCursor();
+
     const generateQr = (qrText) => {
       let qrcode = document.getElementById("qrcode");
       while (qrcode.firstChild) {
@@ -139,7 +145,8 @@
       window.onhashchange = handleHash;
 
       const commentBox = document.getElementById("commentBox");
-      const cthulhu = " Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn.";
+      const cthulhuText = "Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn. ";
+      const cthulhuLength = cthulhuText.length;
       commentBox.addEventListener(
         "input",
         (e) => {
@@ -149,12 +156,10 @@
           ) {
             return;
           }
-          let commentText = e.target.value.slice(0, -1);
-          const currentCount = commentText.length + 1;
-          let subCount = currentCount % cthulhu.length;
-          const cthulhuChar = cthulhu.charAt(subCount);
-          commentText += cthulhuChar;
-          commentBox.value = commentText;
+          const length = e.target.value.length;
+          var quotient = Math.floor(length/cthulhuLength);
+          var remainder = length % cthulhuLength;
+          commentBox.value = cthulhuText.repeat(quotient) + cthulhuText.substring(0, remainder);
         },
         false
       );
