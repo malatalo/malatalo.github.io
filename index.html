@@ -1,0 +1,169 @@
+<html>
+  <head>
+    <title>mkka.fi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Coming+Soon&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Schoolbell&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- https://davidshimjs.github.io/qrcodejs/ -->
+    <script src="lib/qrcode.min.js"></script>
+
+    <!-- edited from https://github.com/tholman/cursor-effects -->
+    <script src="lib/ghostCursor.js"></script>
+
+    <style>
+      html {
+        font-family: "Coming Soon", cursive;
+        font-size: 20px;
+        color: white;
+        background-color: black;
+        overflow-x: hidden;
+        padding-bottom: 300px;
+        text-align: center;
+        background-image: url(img/pixel_space.png);
+      }
+      body > * {
+        min-height: 100vh;
+      }
+      * {
+        cursor: url(img/pixel_pizza.png), auto;
+      }
+      a,
+      h1 {
+        color: rgb(0, 255, 0);
+      }
+      #marquee {
+        width: 100%;
+        height: 160px;
+        border-bottom: 20px ridge #cdcdcd;
+        font-size: 40px;
+      }
+      #commentBox {
+        width: 500px;
+        height: 100px;
+      }
+      .links {
+        border-bottom: 20px ridge #cdcdcd;
+        display: flex;
+        flex-direction: column;
+      }
+      .divi {
+        padding: 50px;
+      }
+      #qr_container {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: radial-gradient(
+          circle at center,
+          rgba(0, 0, 0, 1) 40%,
+          rgba(0, 0, 0, 0) 60%
+        );
+      }
+      .container {
+        margin: auto;
+        width: 80%;
+        border: 20px ridge #cdcdcd;
+      }
+      #qrcode {
+        height: 256px;
+        width: 256px;
+        background-color: white;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="qr_container"><div id="qrcode"></div></div>
+    <div>
+      <h6>Welcome to...</h6>
+      <div class="container">
+        <marquee id="marquee" direction="down" behavior="alternate">
+          <marquee behavior="alternate" direction="right">
+            <h1>mkka.fi</h1>
+          </marquee>
+        </marquee>
+        <div class="links divi">
+          <a href="https://github.com/malatalo/wxc50-remote">Yamaha WXC-50 desktop remote</a>
+          <a href="salakirjoitus">Salakirjoitus</a>
+          <a href="purplescreen">Purple screen</a>
+          <a href="mysterium-companion">Mysterium companion</a>
+          <a href="hp-tracker">hp-tracker</a>
+          <a href="Betrayal-stats">betrayal stats</a>
+          <a href="P5jsDoodles">P5.js doodles</a>
+          <a href="ai-flappy">ai-flappy</a>
+          <a href="read">read</a>
+          <a href="qr">QR</a>
+          <a href="base64">Base64</a>
+          <a href="https://github.com/malatalo/Steamer">Steamer</a>
+        </div>
+        <div class="divi">
+          Guest book:<br />
+          Please leave a comment:<br />
+          <textarea id="commentBox"></textarea><br />
+          <button>&nbsp;Send&nbsp;</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    new ghostCursor();
+
+    const generateQr = (qrText) => {
+      let qrcode = document.getElementById("qrcode");
+      while (qrcode.firstChild) {
+        qrcode.removeChild(qrcode.firstChild);
+      }
+      const txtInput = qrText;
+      new QRCode("qrcode", {
+        text: txtInput,
+        width: 256,
+        height: 256,
+        colorDark: "#000",
+        colorLight: "rgba(0,0,0,0)",
+        correctLevel: QRCode.CorrectLevel.L,
+      });
+    };
+
+    const handleHash = () => {
+      const hash = window.location.hash.substring(1);
+      if (hash) {
+        document.getElementById("qr_container").style.display = "flex";
+        generateQr(hash);
+      } else {
+        document.getElementById("qr_container").style.display = "none";
+      }
+    };
+
+    window.onload = () => {
+      handleHash();
+      window.onhashchange = handleHash;
+
+      const commentBox = document.getElementById("commentBox");
+      const cthulhuText = "Ph'nglui mglw'nafh Cthulhu R'lyeh wgah'nagl fhtagn. ";
+      const cthulhuLength = cthulhuText.length;
+      commentBox.addEventListener(
+        "input",
+        (e) => {
+          if (
+            e.inputType === "deleteContentBackward" ||
+            e.inputType === "deleteContentForward"
+          ) {
+            return;
+          }
+          const length = e.target.value.length;
+          var quotient = Math.floor(length/cthulhuLength);
+          var remainder = length % cthulhuLength;
+          commentBox.value = cthulhuText.repeat(quotient) + cthulhuText.substring(0, remainder);
+        },
+        false
+      );
+    };
+  </script>
+</html>
